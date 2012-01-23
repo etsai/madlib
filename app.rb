@@ -9,6 +9,9 @@ require_relative "models/story"
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
+# Load view code
+require_relative "views/story_presenter"
+
 Story.create :text => "A fine :word1 story"
 
 Story.create :text => "A new :word1 story"
