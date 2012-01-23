@@ -1,7 +1,6 @@
-class Story  
-  attr_reader :text
+class Story
+  include DataMapper::Resource
   
-  def initialize text
-    @text = text
-  end
+  property :id, Serial
+  property :text, Text
 end

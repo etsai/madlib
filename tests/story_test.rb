@@ -1,9 +1,9 @@
 require "minitest/autorun"
-require_relative "../models/story"
+require_relative "../app"
 
 class StoryTest < MiniTest::Unit::TestCase
   def setup
-    @story = Story.new "This is a :word1 story."
+    @story = Story.new :text => "This is a :word1 story."
   end
   
   def test_story_creation
@@ -12,7 +12,7 @@ class StoryTest < MiniTest::Unit::TestCase
   
   def test_story_can_choose_text
     story_text = "This is my :word1 text"
-    @story = Story.new story_text
+    @story = Story.new :text => story_text
     assert_equal story_text, @story.text
   end
   
