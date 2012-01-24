@@ -2,6 +2,8 @@ class Words
   include DataMapper::Resource
   
   property :id, Serial
-  property :word1, URL
-  property :word2, URL
+  property :noun, URL
+  property :verb, URL
+  property :action, URL
+  property :food, URL
 end
