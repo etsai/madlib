@@ -13,7 +13,7 @@ DataMapper.auto_upgrade!
 # Load view code
 require_relative "views/story_presenter"
 
-Story.create :text => "A :adjective story"
+Story.create :text => "Here is a :adjective Twilio fact. :number Twilion's are :feeling :verb"
 
 class Madlib < Sinatra::Base
   get "/" do

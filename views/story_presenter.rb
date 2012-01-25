@@ -9,8 +9,8 @@ class StoryPresenter
     xml = ""
     @story.telling.each do |phrase|
       case phrase
-      when String
-        xml.Say phrase
+      when Story
+        xml.Phrase
         xml << "<Say>#{phrase}</Say>"
       when Word
         xml << "<Play>#{phrase.url}</Play>"

@@ -25,7 +25,7 @@ class StoryPresenterTest < MiniTest::Unit::TestCase
   end
 
   def test_story_presenter_telling_xml_plays_words
-    assert_equal "<Say>This is a </Say><Play>word1.mp3</Play><Say> story.</Say>",
+    assert_equal "<Play>word1.mp3</Play>",
       @sp.telling_xml
   end
 end
