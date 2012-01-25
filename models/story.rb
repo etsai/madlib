@@ -3,4 +3,8 @@ class Story
   
   property :id, Serial
   property :text, Text
+  
+  def telling
+    text.partition(/:\w+/).reject{ |s| s == "" }
+  end
 end

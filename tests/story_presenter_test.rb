@@ -15,12 +15,9 @@ class StoryPresenterTest < MiniTest::Unit::TestCase
     assert_equal @story, @sp.story
   end
   
-  def test_story_presenter_displays_twilio_xml
-    twilio_xml = <<-XML
-    <Say>This is a</Say> <Play>:word1</Play> <Say>story</Say>
-    XML
-
-    assert_equal twilio_xml, @sp.as_xml
+  def test_story_presenter_uses_String
+    @story = Story.new :text => "This is a story."
+    @sp = StoryPresenter.new @story
+    assert_equal "<Say>This is a story</Say>", @sp.telling_xml
   end
-  
 end

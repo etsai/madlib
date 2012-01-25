@@ -4,13 +4,16 @@ class StoryPresenter
   def initialize story
     @story = story
   end
-  
-  def as_xml
-    builder do |xml|
-        xml.instruct!
-        xml.Response do
-          xml.Say(@story)
-          xml.Play(:word1)
-          xml.Hangup
+  # <Say> I once went walking along a </Say><Play> asfadsgas.dasfdasmai.mp3</Play> <Say>when I ...</Say>
+  def telling_xml
+    xml = Builder::XmlMarkup.new
+    @story.telling.each do |phrase|
+      case phrase
+      when String
+        xml.Say(phrase)
+      when Word
+        xml.Play phrase.url
+      end
+    end
   end
 end

@@ -6,12 +6,14 @@ class WordPresenter
   end
   
   def as_xml
-    builder do |xml|
+    xml = Builder::XmlMarkup.new
         xml.instruct!
         xml.Response do
+          xml.Say("Welcome to Twilio Madlib.")
           xml.Say("Please say a")
           xml.Say(@noun)
           xml.Record(maxLength="30" action="hello-monkey-handle-recording.php")
           xml.Hangup
-  end
+        end
+    end
 end

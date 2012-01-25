@@ -5,21 +5,20 @@ class WordTest < MiniTest::Unit::TestCase
   def setup
     @story = Story.new :text => "This is a :word1 story."
     @sp = StoryPresenter.new @story
-    @word = Words.new :url => word_url
+    @word = Word.new :url => "http://www.google.com/foo.mp3"
   end
 
   def test_words_is_created
-    assert @words
+    assert @word
   end
 
-  def test_story_can_choose_text
-    story_text = "This is my :word1 text"
-    @word = Words.new :url => word_url
-    assert_equal word_url, @word.url
+  def test_word_have_url
+    assert_equal "http://www.google.com/foo.mp3", @word.url
   end
-
-  def test_words_have_url
-    assert_equal "http://www.google.mp3", @word.url
+  
+  def test_word_have_type
+    @word = Word.new :type => "noun"
+    assert_equal "noun", @word.type
   end
   
 end

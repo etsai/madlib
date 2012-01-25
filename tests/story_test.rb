@@ -19,4 +19,9 @@ class StoryTest < MiniTest::Unit::TestCase
   def test_story_has_text
     assert_equal "This is a :word1 story.", @story.text
   end
+  
+  def test_story_telling
+    story = Story.new :text => "A wordless story"
+    assert_equal ["A wordless story"], story.telling
+  end
 end

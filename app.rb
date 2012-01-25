@@ -5,6 +5,7 @@ Bundler.require
 DataMapper.setup(:default, "sqlite::memory:")
 # Load model code
 require_relative "models/story"
+require_relative "models/word"
 # Run any database migrations
 DataMapper.finalize
 DataMapper.auto_upgrade!
