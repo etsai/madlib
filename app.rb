@@ -13,17 +13,32 @@ DataMapper.auto_upgrade!
 # Load view code
 require_relative "views/story_presenter"
 
-Story.create :text => "A fine :word1 story"
-
-Story.create :text => "A new :word1 story"
-
-Story.create :text => "An old :word1 story"
-
-Story.create :text => "A lousy :word1 story"
+Story.create :text => "A :adjective story"
 
 class Madlib < Sinatra::Base
+  get "/" do
+    twilio_xml_response do
+      "<Say>Welcome to Twilio Madlib</Say>"
+    end
+    redirect "/stories/:story_id"
+  end
+
   get "/stories/:story_id" do
-    Story.get(params[:story_id]).text
+
+    StoryPresenter.new(Story.get(params[:story_id]))
+  end
+
+  post "/stories/:story_id/:word_type" do
+    # Get the POST Body and create a Nokogiri parser for it.
+    xml = Nokogiri::XML::Document.new(request.body.read)
+
+    Story.get(params[:story_id]).add_word(
+      Word.new(:type => params[:word_type],
+               :url => xml.at_css("RecordingUrl").text))
+  end
+
+  before do
+    content_type :xml
   end
 
   helpers  do
