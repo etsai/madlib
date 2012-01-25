@@ -25,4 +25,13 @@ class Madlib < Sinatra::Base
   get "/stories/:story_id" do
     Story.get(params[:story_id]).text
   end
+
+  helpers  do
+    def twilio_xml_response
+      xml = '<?xml version="1.0" encoding="UTF-8"?><Response>'
+      xml << yield
+      xml << '</Response>'
+    end
+  end
 end
+
