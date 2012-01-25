@@ -10,7 +10,7 @@ class StoryPresenter
     @story.telling.each do |phrase|
       case phrase
       when String
-        xml.Say(phrase)
+        xml.Say phrase
       when Word
         xml.Play phrase.url
       end

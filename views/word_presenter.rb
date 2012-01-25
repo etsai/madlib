@@ -1,19 +1,21 @@
 class WordPresenter
-  attr_reader :noun
+  attr_reader :word
 
-  def initialize noun
-    @noun = noun
+  def initialize word
+    @word = word
   end
   
-  def as_xml
-    xml = Builder::XmlMarkup.new
-        xml.instruct!
-        xml.Response do
-          xml.Say("Welcome to Twilio Madlib.")
-          xml.Say("Please say a")
-          xml.Say(@noun)
-          xml.Record(maxLength="30" action="hello-monkey-handle-recording.php")
-          xml.Hangup
-        end
-    end
+  def type
+  end
+    
+  def prompt_xml
+     xml = Builder::XmlMarkup.new
+     @word.each do |prompt|
+       case prompt
+         xml.Say "Please say a"
+         xml.Record timeout="8"
+       end
+     end
+   end
 end
+
