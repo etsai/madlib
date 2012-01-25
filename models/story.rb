@@ -25,7 +25,6 @@ class Story
         words[word_index += 1]
       else
         # Otherwise, leave the string.
-        s
       end
     end
   end
