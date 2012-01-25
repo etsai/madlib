@@ -6,14 +6,16 @@ class StoryPresenter
   end
   # <Say> I once went walking along a </Say><Play> asfadsgas.dasfdasmai.mp3</Play> <Say>when I ...</Say>
   def telling_xml
-    xml = Builder::XmlMarkup.new
+    xml = ""
     @story.telling.each do |phrase|
       case phrase
       when String
         xml.Say phrase
+        xml << "<Say>#{phrase}</Say>"
       when Word
-        xml.Play phrase.url
+        xml << "<Play>#{phrase.url}</Play>"
       end
     end
+    xml
   end
 end
