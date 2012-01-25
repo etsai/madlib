@@ -21,6 +21,10 @@ class Story
     end
   end
 
+  def complete?
+    symbol_count == words.size
+  end
+
   def phrases
     @phrases ||= begin
                    phrases = []
@@ -34,8 +38,17 @@ class Story
                  end
   end
 
+  def symbols
+    @symbols ||= phrases.select{ |s| s[0] == ':' }.map{ |s| s[1..-1] }
+  end
+
+  def next_symbol
+    symbols[words.size]
+  end
+
+
   def symbol_count
-    phrases.count { |s| s[0] == ':' }
+    symbols.size
   end
 
   def add_word word

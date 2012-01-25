@@ -24,17 +24,40 @@ class Madlib < Sinatra::Base
   end
 
   get "/stories/:story_id" do
+    story = Story.get params[:story_id]
 
-    StoryPresenter.new(Story.get(params[:story_id]))
+    if story.complete?
+      twilio_xml_response do
+        StoryPresenter.new(story).telling_xml
+      end
+    else
+      redirect "/stories/#{story.id}/#{story.next_word_type}"
+    end
+  end
+
+  get "/stories/:story_id/:word_type" do
+    story = Story.get params[:story_id]
+
+    twilio_xml_response do
+      <<-XML
+<Say>Record a #{params[:word_type]}</Say>
+<Record action="http://#{TLD}/stories/#{story.id}/#{params[:word_type]}" method="post" />
+      XML
+    end
   end
 
   post "/stories/:story_id/:word_type" do
     # Get the POST Body and create a Nokogiri parser for it.
     xml = Nokogiri::XML::Document.new(request.body.read)
+    story = Story.get params[:story_id]
 
-    Story.get(params[:story_id]).add_word(
-      Word.new(:type => params[:word_type],
-               :url => xml.at_css("RecordingUrl").text))
+    story.add_word Word.new :type => params[:word_type],
+                            :url => xml.at_css("RecordingUrl").text
+    if story.complete?
+      redirect "/stories/#{story.id}"
+    else
+      redirect "/stories/#{story.id}/#{story.next_word_type}"
+    end
   end
 
   before do
