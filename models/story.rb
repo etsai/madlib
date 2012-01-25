@@ -9,15 +9,6 @@ class Story
   has n, :words
 
   def telling
-    phrases = []
-    remaining = text
-    while remaining =~ SYMBOL_REGEX
-      text, symbol, remaining = remaining.partition SYMBOL_REGEX
-      phrases << text
-      phrases << symbol
-    end
-    phrases << remaining
-
     word_index = -1
     phrases.reject{ |s| s == "" }.map do |s|
       if s[0] == ':'
@@ -28,6 +19,23 @@ class Story
         s
       end
     end
+  end
+
+  def phrases
+    @phrases ||= begin
+                   phrases = []
+                   remaining = text
+                   while remaining =~ SYMBOL_REGEX
+                     text, symbol, remaining = remaining.partition SYMBOL_REGEX
+                     phrases << text
+                     phrases << symbol
+                   end
+                   phrases << remaining
+                 end
+  end
+
+  def symbol_count
+    phrases.count { |s| s[0] == ':' }
   end
 
   def add_word word

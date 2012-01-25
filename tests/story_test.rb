@@ -31,6 +31,14 @@ class StoryTest < MiniTest::Unit::TestCase
     assert_equal ["A wordless story"], story.telling
   end
 
+  def test_story_breaks_text_into_phrases
+    assert_equal 3, @story.phrases.size
+  end
+
+  def test_story_counts_symbols_in_text
+    assert_equal 1, @story.symbol_count
+  end
+
   def test_story_telling_breaks_symbols_out_into_words
     noun = Word.create :type => 'noun', :url => 'noun.mp3'
     verb = Word.create :type => 'verb', :url => 'verb.mp3'
